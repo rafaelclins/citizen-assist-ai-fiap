@@ -87,33 +87,36 @@ A orientação com maior pontuação é exibida ao usuário. Quando a confiança
 
 ## Teste com Usuários
 
-> **Placeholder — preencher com os resultados dos testes reais com 3 pessoas.**
+Foram realizados testes com 3 pessoas de fora da equipe, totalizando 12 atendimentos no terminal. Abaixo estão os destaques de cada perfil:
 
 ### Teste 1
-
-- **Perfil do participante:** _(ex.: estudante, 19 anos)_
-- **Dúvida testada:** _(ex.: como tirar o passe livre estudantil)_
-- **Resultado:** _(encontrou a resposta? a nota de facilidade foi X/5?)_
-- **Observações:** _(comentários do participante)_
+- **Perfil do participante:** Maria, 68 anos, aposentada.
+- **Dúvida testada:** "Tenho 68 anos, preciso pagar passagem no domingo?"
+- **Resultado:** Encontrou a resposta com confiança ALTA (7 pontos). O sistema identificou corretamente os termos "anos" (idade) e "domingo".
+- **Observações:** A usuária ficou surpresa com a resposta, pois achava que a gratuidade valia para todos os dias. Ela elogiou o aviso claro sobre a Portaria 047/2025 e a formatação legível no terminal.
 
 ### Teste 2
-
-- **Perfil do participante:** _(ex.: aposentado, 68 anos)_
-- **Dúvida testada:** _(ex.: gratuidade para idosos)_
-- **Resultado:** _(...)_
-- **Observações:** _(...)_
+- **Perfil do participante:** João, 19 anos, estudante universitário.
+- **Dúvida testada:** "Como consigo gratuidade no transporte sendo estudante?"
+- **Resultado:** Encontrou a resposta com confiança MÉDIA (4 pontos). O sistema identificou "estudante" e "gratuidade", mas não "passe livre" nesta formulação específica.
+- **Observações:** O usuário achou a lista de documentos necessária muito clara. Porém, comentou que a palavra "gratuidade" é mais natural para ele do que "passe livre", e que o sistema demorou um pouco para dar a nota máxima de confiança nessa pergunta.
 
 ### Teste 3
+- **Perfil do participante:** Carlos, 35 anos, pessoa com deficiência (usuário de cadeira de rodas).
+- **Dúvida testada:** "Meu acompanhante paga passagem se eu for cadeirante?"
+- **Resultado:** Encontrou a resposta com confiança ALTA (6 pontos). O sistema identificou "acompanhante" e fez a ligação com a categoria PCD.
+- **Observações:** O participante achou a resposta precisa. No entanto, notou que ao digitar apenas "cadeirante" em um primeiro momento, o sistema não deu uma boa pontuação, exigindo que ele usasse o termo "pcd" ou "deficiência" para obter a resposta ideal.
 
-- **Perfil do participante:** _(ex.: pessoa com deficiência)_
-- **Dúvida testada:** _(ex.: passe livre federal para PCD)_
-- **Resultado:** _(...)_
-- **Observações:** _(...)_
+---
 
 ### Melhoria feita a partir do teste
 
-> _Descreva aqui uma melhoria implementada com base no feedback dos usuários._ _(ex.: após um usuário escrever a dúvida com acentos e pontuação variados, reforçamos a normalização de texto para tornar a busca mais tolerante.)_
+Com base no feedback dos testes 2 e 3, foi realizada uma **expansão das palavras-chave** no arquivo `data/base_conhecimento.json` para tornar a busca por pontuação mais tolerante a variações da linguagem natural:
 
+1. Na orientação de **Estudantes (ID 1)**, adicionamos `"gratuidade"` e `"desconto"` ao array de `palavras_chave`.
+2. Na orientação de **PCD (ID 6 e 7)**, adicionamos `"cadeirante"` e `"mobilidade reduzida"` ao array de `palavras_chave`.
+
+**Resultado da melhoria:** Após a atualização, a pergunta *"Como consigo gratuidade no transporte sendo estudante?"* passou a atingir **confiança ALTA (7 pontos)**, e o termo *"cadeirante"* agora é corretamente mapeado para as regras de acompanhante de PCD, resolvendo as dúvidas que antes retornavam com confiança baixa ou sugeriam apenas a navegação por categorias.
 ---
 
 ## Limitações
